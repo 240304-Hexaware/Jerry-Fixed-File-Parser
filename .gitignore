@@ -40,7 +40,7 @@ spring-server/.springBeans
 spring-server/.sts4-cache
 
 ### IntelliJ IDEA ###
-spring-server/.idea
-spring-server/*.iws
-spring-server/*.iml
-spring-server/*.ipr
+.idea
+*.iws
+*.iml
+*.ipr
