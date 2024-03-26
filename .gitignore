@@ -27,8 +27,9 @@ replay_pid*
 spring-server/HELP.md
 spring-server/target/
 spring-server/.mvn/wrapper/maven-wrapper.jar
-spring-server/**/src/main/**/target/
-spring-server/**/src/test/**/target/
+spring-server/src/main/**/target/
+spring-server/src/test/**/target/
+spring-server/src/main/resources/application.properties
 
 ### STS ###
 spring-server/.apt_generated
