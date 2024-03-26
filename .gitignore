@@ -46,7 +46,7 @@ spring-server/.sts4-cache
 *.iml
 *.ipr
 
-### Angular
+### Angular ###
 
 # Compiled output
 angular-client/dist
@@ -69,7 +69,7 @@ angular-client/.settings/
 angular-client/*.sublime-workspace
 
 # Visual Studio Code
-angular-client/.vscode/*
+/angular-client/.vscode
 angular-client/.vscode/settings.json
 angular-client/.vscode/tasks.json
 angular-client/.vscode/launch.json
