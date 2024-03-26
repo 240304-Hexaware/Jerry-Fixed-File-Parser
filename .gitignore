@@ -22,3 +22,25 @@
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*
 replay_pid*
+
+# Spring
+spring-server/HELP.md
+spring-server/target/
+spring-server/.mvn/wrapper/maven-wrapper.jar
+spring-server/**/src/main/**/target/
+spring-server/**/src/test/**/target/
+
+### STS ###
+spring-server/.apt_generated
+spring-server/.classpath
+spring-server/.factorypath
+spring-server/.project
+spring-server/.settings
+spring-server/.springBeans
+spring-server/.sts4-cache
+
+### IntelliJ IDEA ###
+spring-server/.idea
+spring-server/*.iws
+spring-server/*.iml
+spring-server/*.ipr
