@@ -40,10 +40,15 @@ public class FixedFileService {
      * @return list of fixed files that were uploaded by the user
      * @throws NotFoundException if not fixed file was associated with the user id
      */
-    public List<FixedFile> getFixedFileListByUser(ObjectId userId) throws NotFoundException {
+    public List<FixedFile> getFixedFileListByUser(String userId) throws NotFoundException {
         return fixedFileRepository.findAllByUserId(userId)
                 .orElseThrow(() -> new NotFoundException("No Fixed File was found associated with the User Id"));
     }
+
+    public List<FixedFile> getAllFixedFiles(){
+        return fixedFileRepository.findAll();
+    }
+
 
     /**
      * Uploads and creates a new FixedFile as well as saving it to block storage
@@ -56,15 +61,13 @@ public class FixedFileService {
     public FixedFile uploadFixedFile(String userId, MultipartFile file) throws IOException {
         // Save the file to the specified location
         String fileName = file.getOriginalFilename();
-        String filePath = "src/main/resources/fixed-files/" + fileName;
+        String filePath = "./spring-server/src/main/resources/fixed-files/" + fileName;
         File savedFile = new File(filePath);
         try(OutputStream os = new FileOutputStream(savedFile)) {
             os.write(file.getBytes());
         }
-        // change from hex string to ObjectId
-        ObjectId userObjectId = new ObjectId(userId);
         // Create new fixed file object
-        FixedFile fixedFile = new FixedFile(userObjectId, filePath, fileName);
+        FixedFile fixedFile = new FixedFile(userId, filePath, fileName);
 
         // Save fixed file to database
         return fixedFileRepository.save(fixedFile);
@@ -90,19 +93,18 @@ public class FixedFileService {
      * @return the parsed value strings of
      * @throws IOException  if the file does not exist
      */
-    public String[] readStringFields(String data, Map<String, Field> map) throws IOException {
+    public String[][] readStringFields(String data, Map<String, Field> map) throws IOException {
         List<String> fieldList = new ArrayList<>();
-
+        List<String> nameList = new ArrayList<>();
         Set<String> fields = map.keySet();
         int pos = 0;
         for(String fieldName : fields) {
             Field field = map.get(fieldName);
             String fieldValue = data.substring(pos, pos + field.getWidth()+1).trim();
+            nameList.add(fieldName);
             fieldList.add(fieldValue);
-            System.out.println("[" + fieldName + "][" + fieldValue + "]");
-            // increase the pos
             pos += field.getWidth();
         }
-        return fieldList.toArray(new String[0]);
+        return new String[][]{nameList.toArray(new String[0]), fieldList.toArray(new String[0])};
     }
 }

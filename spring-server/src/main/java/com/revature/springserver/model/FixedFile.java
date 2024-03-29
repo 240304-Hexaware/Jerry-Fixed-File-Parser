@@ -14,15 +14,14 @@ public class FixedFile {
     /**
      * An id for the fixed file
      */
-    @Field("_id")
     @MongoId(FieldType.OBJECT_ID)
-    private ObjectId fixedFileId;
+    private String fixedFileId;
 
     /**
      * An id representing the user who uploaded the file
      */
     @Field("userId")
-    private ObjectId userId;
+    private String userId;
 
     /**
      * A string which represents the file path
@@ -50,7 +49,7 @@ public class FixedFile {
      * @param filePath A string which represents the file path
      * @param name A string which represent the name of the file
      */
-    public FixedFile(ObjectId fixedFileId, ObjectId userId, String filePath, String name) {
+    public FixedFile(String fixedFileId, String userId, String filePath, String name) {
         this.fixedFileId = fixedFileId;
         this.userId = userId;
         this.filePath = filePath;
@@ -64,7 +63,7 @@ public class FixedFile {
      * @param filePath A string which represents the file path
      * @param name A string which represent the name of the file
      */
-    public FixedFile(ObjectId userId, String filePath, String name) {
+    public FixedFile(String userId, String filePath, String name) {
         this.userId = userId;
         this.filePath = filePath;
         this.name = name;
@@ -73,7 +72,7 @@ public class FixedFile {
     /**
      * @return Gets the value of fixedFileId and returns fixedFileId
      */
-    public ObjectId getFixedFileId() {
+    public String getFixedFileId() {
         return fixedFileId;
     }
 
@@ -83,14 +82,14 @@ public class FixedFile {
      *
      * @param fixedFileId An id for the fixed file
      */
-    public void setFixedFileId(ObjectId fixedFileId) {
+    public void setFixedFileId(String fixedFileId) {
         this.fixedFileId = fixedFileId;
     }
 
     /**
      * @return Gets the value of userId and returns userId
      */
-    public ObjectId getUserId() {
+    public String getUserId() {
         return userId;
     }
 
@@ -100,7 +99,7 @@ public class FixedFile {
      *
      * @param userId An id representing the user who uploaded the file
      */
-    public void setUserId(ObjectId userId) {
+    public void setUserId(String userId) {
         this.userId = userId;
     }
 

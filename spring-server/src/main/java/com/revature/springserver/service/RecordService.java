@@ -33,7 +33,7 @@ public class RecordService {
      * @return list of records
      * @throws NotFoundException if no record associated with the fixed file id was found
      */
-    public List<Record> getRecordListByFixedFile(ObjectId fixedFileId) throws NotFoundException {
+    public List<Record> getRecordListByFixedFile(String fixedFileId) throws NotFoundException {
         return recordRepository.findAllByFixedFileId(fixedFileId)
                 .orElseThrow(() -> new NotFoundException("No Record was found associated with the file id"));
     }
@@ -45,7 +45,7 @@ public class RecordService {
      * @return list of records
      * @throws NotFoundException if no record associated with the spec file id
      */
-    public List<Record> getRecordListBySpecFile(ObjectId specFileId) throws NotFoundException {
+    public List<Record> getRecordListBySpecFile(String specFileId) throws NotFoundException {
         return recordRepository.findAllBySpecFileId(specFileId)
                 .orElseThrow(() -> new NotFoundException("No Record was found associated with the fixed file id"));
     }
@@ -53,20 +53,20 @@ public class RecordService {
     /**
      * Adds and creates a new Record
      *
-     * @param fixedFileId the id from where all the records came from
+     * @param userId the id associated with the person who uploaded the fixed file
      * @param specFileId the id of the spec file that was used to parse the records
      * @param keys string array representing variable name
      * @param values string array representing variable data
      * @return newly created Record
      */
-    public Record addRecord(String fixedFileId, String specFileId, String[] keys, String[] values){
-        // change from hex string to ObjectId
-        ObjectId fixedFileObjectId = new ObjectId(fixedFileId);
-        ObjectId specFileObjectId = new ObjectId(specFileId);
+    public Record addRecord(String userId, String specFileId, String[] keys, String[] values){
         // create new Record and save to database
-        return recordRepository.save(new Record(fixedFileObjectId, specFileObjectId, keys, values));
+        return recordRepository.save(new Record(userId, specFileId, keys, values));
     }
 
-    //TODO method to take 2 arrays and create dictionary for
+    public List<Record> getAllRecords(){
+        List<Record> recordList = recordRepository.findAll();
+        return recordList;
+    }
 }
 

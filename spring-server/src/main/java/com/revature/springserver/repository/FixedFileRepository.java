@@ -12,12 +12,12 @@ import java.util.Optional;
  *  Repository class dealing with the database interactions for FixedFile
  */
 @Repository
-public interface FixedFileRepository extends MongoRepository<FixedFile, ObjectId> {
+public interface FixedFileRepository extends MongoRepository<FixedFile, String> {
     /**
      * Retrieves all fixed files that were uploaded by a specific user from database
      *
      * @param userId the id pertaining to the user
      * @return list of fixed files that were uploaded by the user
      */
-    Optional<List<FixedFile>> findAllByUserId(ObjectId userId);
+    Optional<List<FixedFile>> findAllByUserId(String userId);
 }

@@ -19,6 +19,7 @@ import java.util.List;
 /**
  * Controller that defines REST endpoints and handles HTTP Requests for FixedFile
  */
+@CrossOrigin(origins="*")
 @RestController
 @RequestMapping("/api")
 public class FixedFileController {
@@ -42,20 +43,28 @@ public class FixedFileController {
     @PostMapping("/fixed-files")
     public FixedFile upload(@RequestParam String userId, @RequestParam String specFileId, @RequestBody MultipartFile file) throws IOException, NotFoundException {
         // Pull in map from spec
-        ObjectId specFileObjectId = new ObjectId(specFileId);
-        SpecificationFile specFile = specificationFileService.findSpecificationFile(specFileObjectId);
+        SpecificationFile specFile = specificationFileService.findSpecificationFile(specFileId);
         // Upload the fixed file
         FixedFile fixedFile = fixedFileService.uploadFixedFile(userId, file);
         String data = fixedFileService.readAllBytesFromFile(fixedFile);
-        // Get the fixed file id as string
-        String fixedFileId = fixedFile.getFixedFileId().toHexString();
         // Parse the fixed file based on spec map
-        String[] recordArray = fixedFileService.readStringFields(data, SpecificationFileService.parseSpec(new File(specFile.getFilePath())));
+        String[][] recordArray = fixedFileService.readStringFields(data, SpecificationFileService.parseSpec(new File(specFile.getFilePath())));
         // Generate records from recordService
-        recordService.addRecord(fixedFileId, specFileId, recordArray, recordArray);
+        recordService.addRecord(userId, specFileId, recordArray[0], recordArray[1]);
 
         return fixedFile;
     }
+
+    /**
+     *
+     * @return
+     * @throws NotFoundException
+     */
+    @GetMapping("/fixed-files")
+    public List<FixedFile> getAllFixedFiles() throws NotFoundException {
+        return fixedFileService.getAllFixedFiles();
+    }
+
 
     /**
      * GET /api/fixed-files/users/{userId}
@@ -63,15 +72,8 @@ public class FixedFileController {
      */
     @GetMapping("/fixed-files/users/{userId}")
     public List<FixedFile> getFixedFilesListByUser(@PathVariable String userId) throws NotFoundException {
-        ObjectId userObjectId = new ObjectId(userId);
-        return fixedFileService.getFixedFileListByUser(userObjectId);
+        return fixedFileService.getFixedFileListByUser(userId);
     }
-
-    /**
-     * GET /api/fixed-files/download/{fileID}
-     * Download a copy of the original fixed-length file
-     */
-    //TODO finish after frontend
 
     //Exception Handlers
     @ExceptionHandler(IOException.class)

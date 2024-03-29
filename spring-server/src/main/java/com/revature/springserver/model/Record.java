@@ -14,23 +14,21 @@ public class Record {
     /**
      * An id for the record
      */
-    @Field("_id")
     @MongoId(FieldType.OBJECT_ID)
-    private ObjectId recordId;
+    private String recordId;
 
     /**
-     * Foreign key reference for the fixed file
-     * the record was from
+     * Foreign key reference for the user associated with the record
      */
-    @Field("fixedFileId")
-    private ObjectId fixedFileId;
+    @Field("userId")
+    private String userId;
 
     /**
      * Foreign key reference for the specification file
      * that was used to generate the record
      */
     @Field("specFileId")
-    private ObjectId specFileId;
+    private String specFileId;
 
     /**
      * keys and values representing dictionary using 2 string arrays
@@ -51,15 +49,15 @@ public class Record {
      * Constructor with all args
      *
      * @param recordId id associated with the created record
-     * @param fixedFileId id associated with the source of the record data
+     * @param userId id associated user who uploaded the fixed file
      * @param specFileId id associated with the spec file used to parse the fixed file
      * @param keys string array representing variable name
      * @param values string array representing variable data
      */
-    public Record(ObjectId recordId, ObjectId fixedFileId, ObjectId specFileId,
+    public Record(String recordId, String userId, String specFileId,
                   String[] keys, String[] values) {
         this.recordId = recordId;
-        this.fixedFileId = fixedFileId;
+        this.userId = userId;
         this.specFileId = specFileId;
         this.keys = keys;
         this.values = values;
@@ -68,15 +66,100 @@ public class Record {
     /**
      * Constructor with recordId generated
      *
-     * @param fixedFileId id associated with the source of the record data
+     * @param userId id associated user who uploaded the fixed file
      * @param specFileId id associated with the spec file used to parse the fixed file
      * @param keys string array representing variable name
      * @param values string array representing variable data
      */
-    public Record(ObjectId fixedFileId, ObjectId specFileId, String[] keys, String[] values) {
-        this.fixedFileId = fixedFileId;
+    public Record(String userId, String specFileId, String[] keys, String[] values) {
+        this.userId = userId;
         this.specFileId = specFileId;
         this.keys = keys;
+        this.values = values;
+    }
+
+    /**
+     * @return Gets the value of recordId and returns recordId
+     */
+    public String getRecordId() {
+        return recordId;
+    }
+
+    /**
+     * Sets the recordId
+     * You can use getRecordId() to get the value of recordId
+     *
+     * @param recordId
+     */
+    public void setRecordId(String recordId) {
+        this.recordId = recordId;
+    }
+
+    /**
+     * @return Gets the value of userId and returns userId
+     */
+    public String getUserId() {
+        return userId;
+    }
+
+    /**
+     * Sets the userId
+     * You can use getUserId() to get the value of userId
+     *
+     * @param userId
+     */
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
+
+    /**
+     * @return Gets the value of specFileId and returns specFileId
+     */
+    public String getSpecFileId() {
+        return specFileId;
+    }
+
+    /**
+     * Sets the specFileId
+     * You can use getSpecFileId() to get the value of specFileId
+     *
+     * @param specFileId
+     */
+    public void setSpecFileId(String specFileId) {
+        this.specFileId = specFileId;
+    }
+
+    /**
+     * @return Gets the value of keys and returns keys
+     */
+    public String[] getKeys() {
+        return keys;
+    }
+
+    /**
+     * Sets the keys
+     * You can use getKeys() to get the value of keys
+     *
+     * @param keys
+     */
+    public void setKeys(String[] keys) {
+        this.keys = keys;
+    }
+
+    /**
+     * @return Gets the value of values and returns values
+     */
+    public String[] getValues() {
+        return values;
+    }
+
+    /**
+     * Sets the values
+     * You can use getValues() to get the value of values
+     *
+     * @param values
+     */
+    public void setValues(String[] values) {
         this.values = values;
     }
 }

@@ -3,18 +3,15 @@ package com.revature.springserver.controller;
 import com.revature.springserver.exception.NotFoundException;
 import com.revature.springserver.model.Record;
 import com.revature.springserver.service.RecordService;
-import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 /**
  * Controller that defines REST endpoints and handles HTTP Requests for Record
  */
+@CrossOrigin(origins="*")
 @RestController
 @RequestMapping("/api")
 public class RecordController {
@@ -31,8 +28,7 @@ public class RecordController {
      */
     @GetMapping("/records/fixed-files/{fileId}")
     public List<Record> getRecordListByFileId(@PathVariable String fileId) throws NotFoundException {
-        ObjectId fileObjectId = new ObjectId(fileId);
-        return recordService.getRecordListByFixedFile(fileObjectId);
+        return recordService.getRecordListByFixedFile(fileId);
     }
 
     /**
@@ -41,13 +37,11 @@ public class RecordController {
      */
     @GetMapping("/records/spec-files/{specFileId}")
     public List<Record> getRecordListBySpecFileId(@PathVariable String specFileId) throws NotFoundException {
-        ObjectId specFileObjectId = new ObjectId(specFileId);
-        return recordService.getRecordListBySpecFile(specFileObjectId);
+        return recordService.getRecordListBySpecFile(specFileId);
     }
 
-    /**
-     * GET /api/records/json/{fileID}
-     * Download a JSON representation of all records from a file.
-     */
-    //TODO
+    @GetMapping("/records")
+    public List<Record> getAllRecords(){
+        return recordService.getAllRecords();
+    }
 }

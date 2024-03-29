@@ -1,17 +1,21 @@
 package com.revature.springserver.controller;
 
+import com.revature.springserver.exception.NotFoundException;
 import com.revature.springserver.model.SpecificationFile;
 import com.revature.springserver.service.SpecificationFileService;
+import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.List;
 
 /**
  * Controller that defines REST endpoints and handles HTTP Requests for SpecificationFile
  */
+@CrossOrigin(origins="*")
 @RestController
 @RequestMapping("/api")
 public class SpecificationFileController {
@@ -31,11 +35,33 @@ public class SpecificationFileController {
         return specificationFileService.uploadSpecificationFile(userId, file);
     }
 
+    /**
+     * GET /api/specifications/{userId}
+     * Get all specification files uploaded by a user
+     */
+    //@GetMapping("/specifications")
+    public List<SpecificationFile> getSpecificationFileByUser(@PathVariable String String) throws NotFoundException {
+        return specificationFileService.getSpecificationFileListByUser(String);
+    }
+
+    @GetMapping("/specifications")
+    public List<SpecificationFile> getAllSpecificationFiles(){
+        return specificationFileService.getAllSpecificationFiles();
+    }
+
+
+
     // Exception Handler
     @ExceptionHandler(IOException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
     public String queryNotFound(IOException e) {
-        //TODO: change this out for a log message
+        System.out.println(e.getMessage());
+        return e.getMessage();
+    }
+
+    @ExceptionHandler(NotFoundException.class)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    public String queryNotFound(NotFoundException e) {
         System.out.println(e.getMessage());
         return e.getMessage();
     }

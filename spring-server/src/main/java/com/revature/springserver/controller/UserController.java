@@ -46,7 +46,6 @@ public class UserController {
     @ExceptionHandler(NotFoundException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
     public String queryNotFound(NotFoundException e) {
-        //TODO: change this out for a log message
         System.out.println(e.getMessage());
         return e.getMessage();
     }
@@ -54,7 +53,6 @@ public class UserController {
     @ExceptionHandler(AlreadyExistsException.class)
     @ResponseStatus(HttpStatus.CONFLICT)
     public String addAlreadyExists(AlreadyExistsException e) {
-        //TODO: change this out for a log message
         System.out.println(e.getMessage());
         return e.getMessage();
     }

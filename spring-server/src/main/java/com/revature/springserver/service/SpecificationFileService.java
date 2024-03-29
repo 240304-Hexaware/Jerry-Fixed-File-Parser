@@ -15,6 +15,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -41,7 +42,7 @@ public class SpecificationFileService {
      * @return the specification file
      * @throws NotFoundException if no specification associated with the id is found
      */
-    public SpecificationFile findSpecificationFile(ObjectId specFileId) throws NotFoundException {
+    public SpecificationFile findSpecificationFile(String specFileId) throws NotFoundException {
         return specificationFileRepository.findById(specFileId)
                 .orElseThrow(() -> new NotFoundException("Query returned no result."));
     }
@@ -78,18 +79,26 @@ public class SpecificationFileService {
     public SpecificationFile uploadSpecificationFile(String userId, MultipartFile file) throws IOException {
         // Save the file to the specified location
         String fileName = file.getOriginalFilename();
-        String filePath = "./src/main/resources/spec-files/" + fileName;
+        String filePath = "./spring-server/src/main/resources/spec-files/" + fileName;
+        System.out.println(System.getProperty("user.dir"));
         File savedFile = new File(filePath);
         try(OutputStream os = new FileOutputStream(savedFile)) {
             os.write(file.getBytes());
         }
-        // change from hex string to ObjectId
-        ObjectId userObjectId = new ObjectId(userId);
         // Create new specification file object
-        SpecificationFile specificationFile = new SpecificationFile(userObjectId, filePath, fileName);
+        SpecificationFile specificationFile = new SpecificationFile(userId, filePath, fileName);
 
         // Save specification file to database
         return specificationFileRepository.save(specificationFile);
+    }
+
+    public List<SpecificationFile> getSpecificationFileListByUser(String userId) throws NotFoundException {
+        return specificationFileRepository.findAllByUserId(userId)
+                .orElseThrow(() -> new NotFoundException("No Specification File found associated with the User Id"));
+    }
+
+    public List<SpecificationFile> getAllSpecificationFiles(){
+        return specificationFileRepository.findAll();
     }
 
 
