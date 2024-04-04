@@ -28,7 +28,6 @@ export class RecordsByFileComponent {
   getAllRecordsBySpecFile(){
     this.recordService.getAllBySpecFile(this.specFileId).subscribe((response: Record[])=>{
       this.recordList = response;
-      console.log(this.recordList);
     });
   }
 
@@ -61,14 +60,10 @@ export class RecordsByFileComponent {
 
       response.subscribe({
         next: (data: any) => {
-          console.log('data: ', data);
 
           //We can view the headers from the response, which come in the form of a map.
           let respHeaders = data.headers;
           let keys = respHeaders.keys();
-          for (let key of keys) {
-            console.log(key, respHeaders.get(key));
-          }
 
           let fileName: string | null = 'file.txt';
           let fileBody: string | null = data.body;
@@ -79,11 +74,7 @@ export class RecordsByFileComponent {
           alert(JSON.stringify(JSON.parse(data.body), null, 2));
         },
         error: (error: HttpErrorResponse) => {
-          console.log('error: ', error);
           alert(error.message);
-        },
-        complete: () => {
-          console.log('Http response complete!');
         },
       });
     } else {

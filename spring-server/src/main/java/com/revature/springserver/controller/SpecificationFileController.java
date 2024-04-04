@@ -55,14 +55,12 @@ public class SpecificationFileController {
     @ExceptionHandler(IOException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
     public String queryNotFound(IOException e) {
-        System.out.println(e.getMessage());
         return e.getMessage();
     }
 
     @ExceptionHandler(NotFoundException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
     public String queryNotFound(NotFoundException e) {
-        System.out.println(e.getMessage());
         return e.getMessage();
     }
 }

@@ -57,8 +57,7 @@ export class RegisterComponent {
       },
       error: (error: HttpErrorResponse) => {
         this.loginValid = false;
-        console.log("error: ", error);
-        alert(error.message);
+        alert(`Username already exists: ${this.username}`);
       }
     });
   }

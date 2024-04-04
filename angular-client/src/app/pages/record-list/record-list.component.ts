@@ -22,7 +22,6 @@ export class RecordListComponent {
     let userId: string = localStorage.getItem("userId") ?? '';
     this.recordService.getAllByUser(userId).subscribe((response: Record[])=>{
       this.recordList = response;
-      console.log(this.recordList);
     });
   }
 }

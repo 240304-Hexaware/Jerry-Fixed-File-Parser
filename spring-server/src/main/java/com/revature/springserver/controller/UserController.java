@@ -47,14 +47,12 @@ public class UserController {
     @ExceptionHandler(NotFoundException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
     public String queryNotFound(NotFoundException e) {
-        System.out.println(e.getMessage());
         return e.getMessage();
     }
 
     @ExceptionHandler(AlreadyExistsException.class)
     @ResponseStatus(HttpStatus.CONFLICT)
     public String addAlreadyExists(AlreadyExistsException e) {
-        System.out.println(e.getMessage());
         return e.getMessage();
     }
 }

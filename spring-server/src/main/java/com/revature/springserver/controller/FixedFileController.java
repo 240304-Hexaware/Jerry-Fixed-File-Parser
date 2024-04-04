@@ -87,16 +87,12 @@ public class FixedFileController {
     @ExceptionHandler(IOException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
     public String queryNotFound(IOException e) {
-        //TODO: change this out for a log message
-        System.out.println(e.getMessage());
         return e.getMessage();
     }
 
     @ExceptionHandler(NotFoundException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
     public String queryNotFound(NotFoundException e) {
-        //TODO: change this out for a log message
-        System.out.println(e.getMessage());
         return e.getMessage();
     }
 

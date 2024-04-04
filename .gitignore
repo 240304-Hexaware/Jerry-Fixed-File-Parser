@@ -40,6 +40,10 @@ spring-server/.settings
 spring-server/.springBeans
 spring-server/.sts4-cache
 
+# static files
+spring-server/src/main/resources/fixed-files
+spring-server/src/main/resources/spec-files
+
 # IntelliJ IDEA
 .idea
 *.iws
@@ -53,6 +57,8 @@ angular-client/dist
 angular-client/tmp
 angular-client/out-tsc
 angular-client/bazel-out
+
+angular-client/.angular
 
 # Node
 angular-client/node_modules
@@ -69,7 +75,7 @@ angular-client/.settings/
 angular-client/*.sublime-workspace
 
 # Visual Studio Code
-/angular-client/.vscode
+angular-client/.vscode
 angular-client/.vscode/settings.json
 angular-client/.vscode/tasks.json
 angular-client/.vscode/launch.json

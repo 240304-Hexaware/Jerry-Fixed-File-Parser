@@ -74,27 +74,18 @@ export class SpecFileListComponent {
 
       response.subscribe({
         next: (data: any) => {
-          console.log("data: ", data);
 
           //We can view the headers from the response, which come in the form of a map.
           let respHeaders = data.headers;
           let keys = respHeaders.keys();
-          for(let key of keys) {
-            console.log(key, respHeaders.get(key));
-          }
 
           let fileName: string | null = "file.txt"; 
           let fileBody: string | null = data.body;
           this.downloadFile = new Blob([fileBody as string], {type: "text/plain"});
         },
         error: (error: HttpErrorResponse) => {
-          console.log("error: ", error);
           alert(error.message);
         },
-        complete: () => {
-          console.log(response);
-          console.log("hi")
-        }
       });
     }
     else{

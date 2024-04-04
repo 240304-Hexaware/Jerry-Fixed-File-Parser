@@ -78,7 +78,6 @@ public class SpecificationFileService {
         // Save the file to the specified location
         String fileName = file.getOriginalFilename();
         String filePath = "./spring-server/src/main/resources/spec-files/" + fileName;
-        System.out.println(System.getProperty("user.dir"));
         File savedFile = new File(filePath);
         try(OutputStream os = new FileOutputStream(savedFile)) {
             os.write(file.getBytes());

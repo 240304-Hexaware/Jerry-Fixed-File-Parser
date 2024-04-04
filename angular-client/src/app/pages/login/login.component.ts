@@ -50,15 +50,13 @@ export class LoginComponent {
     response.subscribe({
       next: (data: any) => {
         this.loginValid = true;
-        console.log(data);
         localStorage.setItem("username", this.username);
         localStorage.setItem("userId", data.body.userId);
         this.router.navigateByUrl('/specification-files');
       },
       error: (error: HttpErrorResponse) => {
         this.loginValid = false;
-        console.log("error: ", error);
-        alert(error.message);
+        alert("There is no user associated with that password");
       }
     }); 
   }

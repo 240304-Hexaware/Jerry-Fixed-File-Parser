@@ -111,8 +111,6 @@ public class FixedFileService {
                 String fieldValue = data.substring(pos, pos + field.getWidth()+1).trim();
                 nameList.add(fieldName);
                 fieldList.add(fieldValue);
-                System.out.println(nameList);
-                System.out.println(fieldList);
                 pos += field.getWidth() + 1;
             }
             if(endOfFile){
