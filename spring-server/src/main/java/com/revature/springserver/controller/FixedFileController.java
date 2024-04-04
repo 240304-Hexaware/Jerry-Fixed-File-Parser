@@ -2,6 +2,7 @@ package com.revature.springserver.controller;
 
 import com.revature.springserver.exception.NotFoundException;
 import com.revature.springserver.model.FixedFile;
+import com.revature.springserver.model.Record;
 import com.revature.springserver.model.SpecificationFile;
 import com.revature.springserver.service.FixedFileService;
 import com.revature.springserver.service.RecordService;
@@ -14,11 +15,13 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Controller that defines REST endpoints and handles HTTP Requests for FixedFile
  */
+@CrossOrigin(origins="*")
 @RestController
 @RequestMapping("/api")
 public class FixedFileController {
@@ -40,21 +43,35 @@ public class FixedFileController {
      * Upload a fixed-length file.
      */
     @PostMapping("/fixed-files")
-    public FixedFile upload(@RequestParam String userId, @RequestParam String specFileId, @RequestBody MultipartFile file) throws IOException, NotFoundException {
+    public List<Record> upload(@RequestParam String userId, @RequestParam String specFileId, @RequestBody MultipartFile file) throws IOException, NotFoundException {
         // Pull in map from spec
-        ObjectId specFileObjectId = new ObjectId(specFileId);
-        SpecificationFile specFile = specificationFileService.findSpecificationFile(specFileObjectId);
+        SpecificationFile specFile = specificationFileService.findSpecificationFile(specFileId);
         // Upload the fixed file
         FixedFile fixedFile = fixedFileService.uploadFixedFile(userId, file);
         String data = fixedFileService.readAllBytesFromFile(fixedFile);
-        // Get the fixed file id as string
-        String fixedFileId = fixedFile.getFixedFileId().toHexString();
         // Parse the fixed file based on spec map
-        String[] recordArray = fixedFileService.readStringFields(data, SpecificationFileService.parseSpec(new File(specFile.getFilePath())));
+        ArrayList<ArrayList<String>> recordArrayList = fixedFileService.readStringFields(data, SpecificationFileService.parseSpec(new File(specFile.getFilePath())));
         // Generate records from recordService
-        recordService.addRecord(fixedFileId, specFileId, recordArray, recordArray);
+        List<Record> recordList = new ArrayList<>();
 
-        return fixedFile;
+        while(!recordArrayList.isEmpty()){
+            String[] keys = (String[]) recordArrayList.removeFirst().toArray(new String[0]);
+            String[] values = (String[]) recordArrayList.removeFirst().toArray(new String[0]);
+            Record record = recordService.addRecord(userId, specFileId, keys, values);
+            recordList.add(record);
+        }
+
+        return recordList;
+    }
+
+    /**
+     *
+     * @return
+     * @throws NotFoundException
+     */
+    @GetMapping("/fixed-files")
+    public List<FixedFile> getAllFixedFiles() throws NotFoundException {
+        return fixedFileService.getAllFixedFiles();
     }
 
     /**
@@ -63,15 +80,8 @@ public class FixedFileController {
      */
     @GetMapping("/fixed-files/users/{userId}")
     public List<FixedFile> getFixedFilesListByUser(@PathVariable String userId) throws NotFoundException {
-        ObjectId userObjectId = new ObjectId(userId);
-        return fixedFileService.getFixedFileListByUser(userObjectId);
+        return fixedFileService.getFixedFileListByUser(userId);
     }
-
-    /**
-     * GET /api/fixed-files/download/{fileID}
-     * Download a copy of the original fixed-length file
-     */
-    //TODO finish after frontend
 
     //Exception Handlers
     @ExceptionHandler(IOException.class)

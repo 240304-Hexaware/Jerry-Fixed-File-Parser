@@ -16,9 +16,8 @@ public class User {
     /**
      * An id for this User
      */
-    @Field("_id")
     @MongoId(FieldType.OBJECT_ID)
-    private ObjectId userId;
+    private String userId;
 
     /**
      * A username for this User (must be unique and not blank)
@@ -65,7 +64,7 @@ public class User {
      * @param password the password used by the user to login
      * @param role what role and permissions the user has
      */
-    public User(ObjectId userId, String username, String password, String role) {
+    public User(String userId, String username, String password, String role) {
         this.userId = userId;
         this.username = username;
         this.password = password;
@@ -75,7 +74,7 @@ public class User {
     /**
      * @return Gets the value of user_id and returns user_id
      */
-    public ObjectId getUserId() {
+    public String getUserId() {
         return userId;
     }
 
@@ -85,7 +84,7 @@ public class User {
      *
      * @param userId the id associated with a user
      */
-    public void setUserId(ObjectId userId) {
+    public void setUserId(String userId) {
         this.userId = userId;
     }
 

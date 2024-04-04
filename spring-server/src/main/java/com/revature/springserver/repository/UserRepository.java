@@ -11,7 +11,7 @@ import java.util.Optional;
  *  Repository class dealing with the database interactions for User
  */
 @Repository
-public interface UserRepository extends MongoRepository<User, ObjectId> {
+public interface UserRepository extends MongoRepository<User, String> {
     /**
      * Retrieves an optional User instance from the database by the provided username and password
      *

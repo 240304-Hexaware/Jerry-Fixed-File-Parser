@@ -15,15 +15,14 @@ public class SpecificationFile {
     /**
      * An id for the specification file
      */
-    @Field("_id")
     @MongoId(FieldType.OBJECT_ID)
-    private ObjectId specFileId;
+    private String specFileId;
 
     /**
      * An id representing the user who uploaded the file
      */
     @Field("userId")
-    private ObjectId userId;
+    private String userId;
 
     /**
      * A string which represents the file path
@@ -51,7 +50,7 @@ public class SpecificationFile {
      * @param filePath A string which represents the file path
      * @param name A string which represents the file path
      */
-    public SpecificationFile(ObjectId specFileId, ObjectId userId, String filePath, String name) {
+    public SpecificationFile(String specFileId, String userId, String filePath, String name) {
         this.specFileId = specFileId;
         this.userId = userId;
         this.filePath = filePath;
@@ -65,7 +64,7 @@ public class SpecificationFile {
      * @param filePath A string which represents the file path
      * @param name A string which represents the file path
      */
-    public SpecificationFile(ObjectId userId, String filePath, String name){
+    public SpecificationFile(String userId, String filePath, String name){
         this.userId = userId;
         this.filePath = filePath;
         this.name = name;
@@ -74,7 +73,7 @@ public class SpecificationFile {
     /**
      * @return Gets the value of specFileId and returns specFileId
      */
-    public ObjectId getSpecFileId() {
+    public String getSpecFileId() {
         return specFileId;
     }
 
@@ -84,14 +83,14 @@ public class SpecificationFile {
      *
      * @param specFileId An id for the specification file
      */
-    public void setSpecFileId(ObjectId specFileId) {
+    public void setSpecFileId(String specFileId) {
         this.specFileId = specFileId;
     }
 
     /**
      * @return Gets the value of userId and returns userId
      */
-    public ObjectId getUserId() {
+    public String getUserId() {
         return userId;
     }
 
@@ -101,7 +100,7 @@ public class SpecificationFile {
      *
      * @param userId An id representing the user who uploaded the file
      */
-    public void setUserId(ObjectId userId) {
+    public void setUserId(String userId) {
         this.userId = userId;
     }
 

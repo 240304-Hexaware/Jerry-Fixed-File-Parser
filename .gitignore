@@ -23,7 +23,7 @@
 hs_err_pid*
 replay_pid*
 
-# Spring
+### Spring ###
 spring-server/HELP.md
 spring-server/target/
 spring-server/.mvn/wrapper/maven-wrapper.jar
@@ -31,7 +31,7 @@ spring-server/src/main/**/target/
 spring-server/src/test/**/target/
 spring-server/src/main/resources/application.properties
 
-### STS ###
+# STS
 spring-server/.apt_generated
 spring-server/.classpath
 spring-server/.factorypath
@@ -40,8 +40,51 @@ spring-server/.settings
 spring-server/.springBeans
 spring-server/.sts4-cache
 
-### IntelliJ IDEA ###
+# IntelliJ IDEA
 .idea
 *.iws
 *.iml
 *.ipr
+
+### Angular ###
+
+# Compiled output
+angular-client/dist
+angular-client/tmp
+angular-client/out-tsc
+angular-client/bazel-out
+
+# Node
+angular-client/node_modules
+angular-client/npm-debug.log
+angular-client/yarn-error.log
+
+# IDEs and editors
+angular-client/.idea/
+angular-client/.project
+angular-client/.classpath
+angular-client/.c9/
+angular-client/*.launch
+angular-client/.settings/
+angular-client/*.sublime-workspace
+
+# Visual Studio Code
+/angular-client/.vscode
+angular-client/.vscode/settings.json
+angular-client/.vscode/tasks.json
+angular-client/.vscode/launch.json
+angular-client/.vscode/extensions.json
+angular-client/.history/*
+
+# Miscellaneous
+angular-client/.angular/cache
+angular-client/.sass-cache/
+angular-client/connect.lock
+angular-client/coverage
+angular-client/libpeerconnection.log
+angular-client/testem.log
+angular-client/typings
+
+# System files
+angular-client/.DS_Store
+angular-client/Thumbs.db

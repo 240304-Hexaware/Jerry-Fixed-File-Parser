@@ -1,0 +1,30 @@
+<app-navbar></app-navbar>
+<div>
+  <div class="flex items-center justify-between m-5">
+    <p class="text-2xl font-semibold">Specification Files</p>
+    <div>
+      <input
+        type="file"
+        id="hidden-button"
+        class="hidden"
+        (change)="onFileSelected($event)"
+      />
+      <button mat-stroked-button (click)="uploadFile()">Upload Files</button>
+    </div>
+  </div>
+
+  <div class="border-gray-200 border-t border-b border-l border-r rounded m-5">
+    <mat-list>
+      @for (specFile of speclist; track specFile) {
+        <div>
+          <mat-list-item (click)="routeToRecordsBySpec(specFile.specFileId)">
+            <mat-icon matListItemIcon>description</mat-icon>
+            <div matListItemTitle>{{ specFile.name }}</div>
+          </mat-list-item>
+        </div>
+      } @empty{
+      <div>No specification file has been uploaded</div>
+      }
+    </mat-list>
+  </div>
+</div>

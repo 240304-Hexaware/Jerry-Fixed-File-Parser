@@ -32,7 +32,7 @@ public class UserService {
      * @return The found user
      * @throws NotFoundException If no user is found with the provided ID
      */
-    public User findUser(ObjectId userId) throws NotFoundException {
+    public User findUser(String userId) throws NotFoundException {
         return userRepository.findById(userId)
                 .orElseThrow(() -> new NotFoundException("User not found with id: " + userId));
     }
@@ -66,7 +66,6 @@ public class UserService {
 
         // Create a new user
         User user = new User(username, password, role);
-        //TODO Hash and encrypt password
 
         // Save the user to the database
         return userRepository.save(user);
