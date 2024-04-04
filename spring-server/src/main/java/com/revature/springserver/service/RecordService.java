@@ -3,7 +3,6 @@ package com.revature.springserver.service;
 import com.revature.springserver.exception.NotFoundException;
 import com.revature.springserver.model.Record;
 import com.revature.springserver.repository.RecordRepository;
-import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -65,8 +64,7 @@ public class RecordService {
     }
 
     public List<Record> getAllRecords(){
-        List<Record> recordList = recordRepository.findAll();
-        return recordList;
+        return recordRepository.findAll();
     }
 }
 

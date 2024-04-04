@@ -3,7 +3,7 @@ import { MatDividerModule } from '@angular/material/divider';
 import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
 import { MatButtonModule } from '@angular/material/button';
-import { HttpClient, HttpErrorResponse, HttpHeaders, HttpResponse } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse} from '@angular/common/http';
 import { NgFor } from '@angular/common';
 import { SpecificationFile } from '../../models/specification-file/specification-file';
 import { SpecificationFileService } from '../../services/specification-file/specification-file.service';
@@ -63,7 +63,6 @@ export class SpecFileListComponent {
       formData.append("file", file);
       let url = "http://localhost:8080/api/specifications"
 
-      //TODO change to take in userid
       let options: Object = {
         observe: "response",
         responseType: 'text',
@@ -75,11 +74,6 @@ export class SpecFileListComponent {
       response.subscribe({
         next: (data: any) => {
 
-          //We can view the headers from the response, which come in the form of a map.
-          let respHeaders = data.headers;
-          let keys = respHeaders.keys();
-
-          let fileName: string | null = "file.txt"; 
           let fileBody: string | null = data.body;
           this.downloadFile = new Blob([fileBody as string], {type: "text/plain"});
         },

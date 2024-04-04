@@ -7,7 +7,6 @@ import com.revature.springserver.model.SpecificationFile;
 import com.revature.springserver.service.FixedFileService;
 import com.revature.springserver.service.RecordService;
 import com.revature.springserver.service.SpecificationFileService;
-import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -55,10 +54,10 @@ public class FixedFileController {
         List<Record> recordList = new ArrayList<>();
 
         while(!recordArrayList.isEmpty()){
-            String[] keys = (String[]) recordArrayList.removeFirst().toArray(new String[0]);
-            String[] values = (String[]) recordArrayList.removeFirst().toArray(new String[0]);
-            Record record = recordService.addRecord(userId, specFileId, keys, values);
-            recordList.add(record);
+            String[] keys = recordArrayList.removeFirst().toArray(new String[0]);
+            String[] values = recordArrayList.removeFirst().toArray(new String[0]);
+            Record newRecord = recordService.addRecord(userId, specFileId, keys, values);
+            recordList.add(newRecord);
         }
 
         return recordList;
@@ -70,7 +69,7 @@ public class FixedFileController {
      * @throws NotFoundException
      */
     @GetMapping("/fixed-files")
-    public List<FixedFile> getAllFixedFiles() throws NotFoundException {
+    public List<FixedFile> getAllFixedFiles() {
         return fixedFileService.getAllFixedFiles();
     }
 

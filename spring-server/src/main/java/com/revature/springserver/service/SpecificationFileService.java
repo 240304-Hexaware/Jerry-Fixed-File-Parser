@@ -6,7 +6,6 @@ import com.revature.springserver.exception.NotFoundException;
 import com.revature.springserver.model.Field;
 import com.revature.springserver.model.SpecificationFile;
 import com.revature.springserver.repository.SpecificationFileRepository;
-import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;

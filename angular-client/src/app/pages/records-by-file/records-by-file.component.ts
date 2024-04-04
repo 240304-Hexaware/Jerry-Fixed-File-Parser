@@ -46,7 +46,6 @@ export class RecordsByFileComponent {
       let url = 'http://localhost:8080/api/fixed-files';
       let userId: string = localStorage.getItem("userId") ?? '';
 
-      //TODO change to take in userid and specfileId
       let options: Object = {
         observe: 'response',
         responseType: 'text',
@@ -60,12 +59,6 @@ export class RecordsByFileComponent {
 
       response.subscribe({
         next: (data: any) => {
-
-          //We can view the headers from the response, which come in the form of a map.
-          let respHeaders = data.headers;
-          let keys = respHeaders.keys();
-
-          let fileName: string | null = 'file.txt';
           let fileBody: string | null = data.body;
           this.downloadFile = new Blob([fileBody as string], {
             type: 'text/plain',
@@ -83,6 +76,5 @@ export class RecordsByFileComponent {
     }
 
     this.getAllRecordsBySpecFile();
-    //window.location.reload();
   }
 }

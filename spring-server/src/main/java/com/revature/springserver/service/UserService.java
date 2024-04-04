@@ -4,7 +4,6 @@ import com.revature.springserver.exception.AlreadyExistsException;
 import com.revature.springserver.exception.NotFoundException;
 import com.revature.springserver.model.User;
 import com.revature.springserver.repository.UserRepository;
-import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
