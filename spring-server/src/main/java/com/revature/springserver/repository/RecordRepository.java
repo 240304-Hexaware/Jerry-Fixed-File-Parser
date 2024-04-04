@@ -14,12 +14,12 @@ import java.util.Optional;
 @Repository
 public interface RecordRepository extends MongoRepository<Record, String> {
     /**
-     * Retrieves all the records that came from a specific fixed file from database
+     * Retrieves all the records that came from a specific user from database
      *
-     * @param fixedFileId the id to check
-     * @return list of records that came from the fixed file
+     * @param userId the id to check
+     * @return list of records that came from the user
      */
-    Optional<List<Record>> findAllByFixedFileId(String fixedFileId);
+    Optional<List<Record>> findAllByUserId(String userId);
 
     /**
      * Retrieves all the records that were parsed using a specific spec file from database

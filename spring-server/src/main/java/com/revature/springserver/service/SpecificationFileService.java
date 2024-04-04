@@ -63,8 +63,6 @@ public class SpecificationFileService {
         for(String s : keySet) {
             map.get(s).setName(s);
         }
-
-        System.out.println(map);
         return map;
     }
 

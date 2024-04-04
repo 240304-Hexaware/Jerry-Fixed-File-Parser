@@ -6,11 +6,17 @@ import { Observable } from 'rxjs';
   providedIn: 'root',
 })
 export class RecordService {
-  SpecAPIUrl = 'http://localhost:8080/api/records';
+  RecordAPIUrl = 'http://localhost:8080/api/records';
 
   constructor(private http: HttpClient) {}
 
-  getAll(): Observable<any> {
-    return this.http.get<any>(this.SpecAPIUrl);
+  getAllByUser(userId: string): Observable<any> {
+    let url: string = this.RecordAPIUrl + "/users/" + userId
+    return this.http.get<any>(url);
+  }
+
+  getAllBySpecFile(specFileId: string): Observable<any> {
+    let url: string = this.RecordAPIUrl + "/spec-files/" + specFileId
+    return this.http.get<any>(url);
   }
 }

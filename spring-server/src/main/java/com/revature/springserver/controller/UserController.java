@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 /**
  * Controller that defines REST endpoints and handles HTTP Requests
  */
+@CrossOrigin(origins="*")
 @RestController
 @RequestMapping("/api/auth")
 public class UserController {

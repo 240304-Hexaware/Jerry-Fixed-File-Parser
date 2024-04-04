@@ -39,9 +39,9 @@ public class SpecificationFileController {
      * GET /api/specifications/{userId}
      * Get all specification files uploaded by a user
      */
-    //@GetMapping("/specifications")
-    public List<SpecificationFile> getSpecificationFileByUser(@PathVariable String String) throws NotFoundException {
-        return specificationFileService.getSpecificationFileListByUser(String);
+    @GetMapping("/specifications/{userId}")
+    public List<SpecificationFile> getSpecificationFileByUser(@PathVariable String userId) throws NotFoundException {
+        return specificationFileService.getSpecificationFileListByUser(userId);
     }
 
     @GetMapping("/specifications")

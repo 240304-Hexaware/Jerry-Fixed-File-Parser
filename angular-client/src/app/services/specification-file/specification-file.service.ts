@@ -8,14 +8,14 @@ import { Observable } from 'rxjs';
 export class SpecificationFileService {
 
   SpecAPIUrl ="http://localhost:8080/api/specifications";
-  userId = "6605cf6280e08c0a76c0c12b";
 
   // Inject ApiUrl in constructor to Get it form another Service
   constructor(private http: HttpClient) { }
 
   // Get with id
-  get(id: any): Observable<any> {
-    return this.http.get(`${this.SpecAPIUrl}/${id}`);
+  get(userId: string): Observable<any> {
+    let url: string = this.SpecAPIUrl + "/" + userId;
+    return this.http.get(url);
   }
 
   getAll(): Observable<any> {

@@ -1,0 +1,33 @@
+<div>
+    <mat-grid-list cols="2">
+      <mat-grid-tile>
+        <div class="text-4xl font-semibold">
+          <span>Fixed File Parser</span>
+        </div>
+      </mat-grid-tile>
+      <mat-grid-tile>
+        <mat-card class>
+          <mat-card-header>
+            <mat-card-title>Register</mat-card-title>
+          </mat-card-header>
+          <mat-card-content>
+            <form #registerForm="ngForm" (ngSubmit)="onSubmit()">
+              <button mat-button routerLink="/login">Already have an account?</button>
+              <div>
+                <mat-form-field>
+                  <input matInput placeholder="Username" [(ngModel)]="username" name="username" required>
+                </mat-form-field>
+              </div>
+              <div>
+                <mat-form-field>
+                  <input matInput type="password" placeholder="Password" [(ngModel)]="password" name="password" required>
+                </mat-form-field>
+              </div>
+              <button mat-raised-button color="primary" [disabled]="!registerForm.form.valid">Register</button>
+            </form>
+          </mat-card-content>
+        </mat-card>
+      </mat-grid-tile>
+    </mat-grid-list>
+  </div>
+  

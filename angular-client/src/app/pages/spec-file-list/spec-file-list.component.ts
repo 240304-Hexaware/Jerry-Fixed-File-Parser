@@ -7,6 +7,8 @@ import { HttpClient, HttpErrorResponse, HttpHeaders, HttpResponse } from '@angul
 import { NgFor } from '@angular/common';
 import { SpecificationFile } from '../../models/specification-file/specification-file';
 import { SpecificationFileService } from '../../services/specification-file/specification-file.service';
+import { NavbarComponent } from '../navbar/navbar.component';
+import { Router } from '@angular/router';
 
 /**
  * @title List with sections
@@ -20,6 +22,7 @@ import { SpecificationFileService } from '../../services/specification-file/spec
     MatDividerModule,
     MatButtonModule,
     NgFor,
+    NavbarComponent
   ],
   templateUrl: './spec-file-list.component.html',
   styleUrl: './spec-file-list.component.css',
@@ -34,12 +37,12 @@ export class SpecFileListComponent {
   fileName = '';
   downloadFile: Blob | undefined;
 
-  constructor(private http: HttpClient, private specificationService: SpecificationFileService) {
-    this.getAllSpecFiles();
+  constructor(private http: HttpClient, private router: Router, private specificationService: SpecificationFileService) {
+    this.getSpecFilesByUser();
   }
 
-  getAllSpecFiles(){
-    this.specificationService.getAll().subscribe((response: SpecificationFile[])=>{
+  getSpecFilesByUser(){
+    this.specificationService.get(localStorage.getItem("userId") ?? '').subscribe((response: SpecificationFile[])=>{
       this.speclist = response;
     });
   }
@@ -52,6 +55,7 @@ export class SpecFileListComponent {
   onFileSelected(event: any) {
 
     const file: File = event.target.files[0];
+    let userId: string = localStorage.getItem("userId") ?? '';
 
     if(file){
       this.fileName = file.name;
@@ -63,7 +67,7 @@ export class SpecFileListComponent {
       let options: Object = {
         observe: "response",
         responseType: 'text',
-        params: {"userId": "65fb37fe6a455b19cfd968be"},
+        params: {"userId": userId},
       }
 
       let response = this.http.post(url, formData, options);
@@ -88,7 +92,8 @@ export class SpecFileListComponent {
           alert(error.message);
         },
         complete: () => {
-          console.log("Http response complete!")
+          console.log(response);
+          console.log("hi")
         }
       });
     }
@@ -97,8 +102,13 @@ export class SpecFileListComponent {
       return;
     }
 
-    this.getAllSpecFiles();
+    this.getSpecFilesByUser();
     window.location.reload();
+  }
+
+  routeToRecordsBySpec(specFileId: string){
+    localStorage.setItem("specFileId", specFileId);
+    this.router.navigateByUrl('/specification-files/records');
   }
 
 }

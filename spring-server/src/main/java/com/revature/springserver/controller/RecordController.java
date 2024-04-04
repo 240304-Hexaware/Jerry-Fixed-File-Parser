@@ -23,12 +23,12 @@ public class RecordController {
     }
 
     /**
-     * GET /api/records/{fileId}
-     * Get all parsed records from a file grouped by file
+     * GET /api/records/users/{userId}
+     * Get all parsed records from a file grouped by user
      */
-    @GetMapping("/records/fixed-files/{fileId}")
-    public List<Record> getRecordListByFileId(@PathVariable String fileId) throws NotFoundException {
-        return recordService.getRecordListByFixedFile(fileId);
+    @GetMapping("/records/users/{userId}")
+    public List<Record> getRecordListByUserId(@PathVariable String userId) throws NotFoundException {
+        return recordService.getRecordListByUser(userId);
     }
 
     /**

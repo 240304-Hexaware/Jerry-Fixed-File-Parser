@@ -4,7 +4,6 @@ import com.revature.springserver.exception.NotFoundException;
 import com.revature.springserver.model.Field;
 import com.revature.springserver.model.FixedFile;
 import com.revature.springserver.repository.FixedFileRepository;
-import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -89,22 +88,40 @@ public class FixedFileService {
      * in order to create a list of strings, each representing one field value from the flat file
      *
      * @param data the parsed string data
-     * @param map a map of tokens representing fields in the fixed file
+     * @param map  a map of tokens representing fields in the fixed file
      * @return the parsed value strings of
-     * @throws IOException  if the file does not exist
+     * @throws IOException if the file does not exist
      */
-    public String[][] readStringFields(String data, Map<String, Field> map) throws IOException {
-        List<String> fieldList = new ArrayList<>();
-        List<String> nameList = new ArrayList<>();
+    public ArrayList<ArrayList<String>> readStringFields(String data, Map<String, Field> map) throws IOException {
+        ArrayList<ArrayList<String>> stringFields = new ArrayList<ArrayList<String>>();
         Set<String> fields = map.keySet();
         int pos = 0;
-        for(String fieldName : fields) {
-            Field field = map.get(fieldName);
-            String fieldValue = data.substring(pos, pos + field.getWidth()+1).trim();
-            nameList.add(fieldName);
-            fieldList.add(fieldValue);
-            pos += field.getWidth();
+        int length = data.length();
+        boolean endOfFile = false;
+        // just need to check if we are near the end of the string and while loop
+        while(pos < length){
+            ArrayList<String> nameList = new ArrayList<String>();
+            ArrayList<String> fieldList = new ArrayList<String>();
+            for(String fieldName : fields) {
+                Field field = map.get(fieldName);
+                if(pos + field.getWidth() + 1 > length){
+                    endOfFile = true;
+                    break;
+                }
+                String fieldValue = data.substring(pos, pos + field.getWidth()+1).trim();
+                nameList.add(fieldName);
+                fieldList.add(fieldValue);
+                System.out.println(nameList);
+                System.out.println(fieldList);
+                pos += field.getWidth() + 1;
+            }
+            if(endOfFile){
+                break;
+            }
+            stringFields.add(nameList);
+            stringFields.add(fieldList);
         }
-        return new String[][]{nameList.toArray(new String[0]), fieldList.toArray(new String[0])};
+        //return new String[][]{nameList.toArray(new String[0]), fieldList.toArray(new String[0])};
+        return stringFields;
     }
 }

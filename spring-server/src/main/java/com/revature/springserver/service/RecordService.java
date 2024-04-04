@@ -27,15 +27,15 @@ public class RecordService {
     }
 
     /**
-     * Retrieves a list of all the records that came from a specific fixed file
+     * Retrieves a list of all the records that came from a user
      *
-     * @param fixedFileId the id from where all the records came from
+     * @param userId the id associated with the user
      * @return list of records
-     * @throws NotFoundException if no record associated with the fixed file id was found
+     * @throws NotFoundException if no record associated with the user id was found
      */
-    public List<Record> getRecordListByFixedFile(String fixedFileId) throws NotFoundException {
-        return recordRepository.findAllByFixedFileId(fixedFileId)
-                .orElseThrow(() -> new NotFoundException("No Record was found associated with the file id"));
+    public List<Record> getRecordListByUser(String userId) throws NotFoundException {
+        return recordRepository.findAllByUserId(userId)
+                .orElseThrow(() -> new NotFoundException("No Record was found associated with the user id"));
     }
 
     /**

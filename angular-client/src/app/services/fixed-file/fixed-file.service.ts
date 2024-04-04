@@ -7,18 +7,18 @@ import { Observable } from 'rxjs';
 })
 export class FixedFileService {
   
-  SpecAPIUrl ="http://localhost:8080/api/fixed-files";
+  fixedFileAPIURL ="http://localhost:8080/api/fixed-files";
 
   // Inject ApiUrl in constructor to Get it form ather Service
   constructor(private http: HttpClient) { }
 
   // Get Method
   getAll(): Observable<any> {
-    return this.http.get<any>(this.SpecAPIUrl);
+    return this.http.get<any>(this.fixedFileAPIURL);
   }
   // Get with user id
-  get(id: any): Observable<any> {
-    return this.http.get(`${this.SpecAPIUrl}/users/${id}`);
+  get(userId: string): Observable<any> {
+    return this.http.get(`${this.fixedFileAPIURL}/users/${userId}`);
   }
   // Create Method
   Create(userId: string, specFileId: string, file: any): Observable<any> {
@@ -30,6 +30,6 @@ export class FixedFileService {
         "specFileId": specFileId,
       },
     }
-    return this.http.post(this.SpecAPIUrl, file, options);
+    return this.http.post(this.fixedFileAPIURL, file, options);
   }
 }

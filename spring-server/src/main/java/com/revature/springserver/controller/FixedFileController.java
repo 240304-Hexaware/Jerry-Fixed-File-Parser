@@ -2,6 +2,7 @@ package com.revature.springserver.controller;
 
 import com.revature.springserver.exception.NotFoundException;
 import com.revature.springserver.model.FixedFile;
+import com.revature.springserver.model.Record;
 import com.revature.springserver.model.SpecificationFile;
 import com.revature.springserver.service.FixedFileService;
 import com.revature.springserver.service.RecordService;
@@ -14,6 +15,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -41,18 +43,25 @@ public class FixedFileController {
      * Upload a fixed-length file.
      */
     @PostMapping("/fixed-files")
-    public FixedFile upload(@RequestParam String userId, @RequestParam String specFileId, @RequestBody MultipartFile file) throws IOException, NotFoundException {
+    public List<Record> upload(@RequestParam String userId, @RequestParam String specFileId, @RequestBody MultipartFile file) throws IOException, NotFoundException {
         // Pull in map from spec
         SpecificationFile specFile = specificationFileService.findSpecificationFile(specFileId);
         // Upload the fixed file
         FixedFile fixedFile = fixedFileService.uploadFixedFile(userId, file);
         String data = fixedFileService.readAllBytesFromFile(fixedFile);
         // Parse the fixed file based on spec map
-        String[][] recordArray = fixedFileService.readStringFields(data, SpecificationFileService.parseSpec(new File(specFile.getFilePath())));
+        ArrayList<ArrayList<String>> recordArrayList = fixedFileService.readStringFields(data, SpecificationFileService.parseSpec(new File(specFile.getFilePath())));
         // Generate records from recordService
-        recordService.addRecord(userId, specFileId, recordArray[0], recordArray[1]);
+        List<Record> recordList = new ArrayList<>();
 
-        return fixedFile;
+        while(!recordArrayList.isEmpty()){
+            String[] keys = (String[]) recordArrayList.removeFirst().toArray(new String[0]);
+            String[] values = (String[]) recordArrayList.removeFirst().toArray(new String[0]);
+            Record record = recordService.addRecord(userId, specFileId, keys, values);
+            recordList.add(record);
+        }
+
+        return recordList;
     }
 
     /**
@@ -64,7 +73,6 @@ public class FixedFileController {
     public List<FixedFile> getAllFixedFiles() throws NotFoundException {
         return fixedFileService.getAllFixedFiles();
     }
-
 
     /**
      * GET /api/fixed-files/users/{userId}

@@ -1,3 +1,4 @@
+<app-navbar></app-navbar>
 <div>
   <div class="flex items-center justify-between m-5">
     <p class="text-2xl font-semibold">Specification Files</p>
@@ -16,7 +17,7 @@
     <mat-list>
       @for (specFile of speclist; track specFile) {
         <div>
-          <mat-list-item>
+          <mat-list-item (click)="routeToRecordsBySpec(specFile.specFileId)">
             <mat-icon matListItemIcon>description</mat-icon>
             <div matListItemTitle>{{ specFile.name }}</div>
           </mat-list-item>
