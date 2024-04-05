@@ -16,19 +16,19 @@
 
   <div class="border-gray-200 border-t border-b border-l border-r rounded m-5">
     <table aria-describedby="Records By Specification File">
-      @for (record of recordList; track record) {
-        <div>
-          <tr>
-            @for (key of record.keys; track key){
-              <th>{{ key }}</th>
-            }
-          </tr>
-          <tr>
+      @for (record of recordList; track record; let first = $first) {
+          @if (first) {
+            <tr class="text-base">
+              @for (key of record.keys; track key){
+                <td class="p-1.5 font-bold">{{ key }}</td>
+              }
+            </tr>
+          }
+          <tr class="text-base">
             @for (value of record.values; track value){
-              <td>{{ value }}</td>
+              <td class="p-1.5">{{ value }}</td>
             }
           </tr>
-        </div>
       } @empty{
       <div>No record has been parsed</div>
       }

@@ -63,7 +63,6 @@ export class RecordsByFileComponent {
           this.downloadFile = new Blob([fileBody as string], {
             type: 'text/plain',
           });
-
           alert(JSON.stringify(JSON.parse(data.body), null, 2));
         },
         error: (error: HttpErrorResponse) => {
